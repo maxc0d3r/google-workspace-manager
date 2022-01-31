@@ -14,6 +14,47 @@ def addDNSRecord(domain,token,ttl=600):
             'type': 'CNAME',
             'ttl': ttl, 
             'data':value
+        },
+        {
+            'name': '@',
+            'type': 'MX',
+            'ttl': 3600,
+            'priority': 1,
+            'data': 'aspmx.l.google.com'
+        },
+        {
+            'name': '@',
+            'type': 'MX',
+            'ttl': 3600,
+            'priority': 5,
+            'data': 'alt1.aspmx.l.google.com'
+        },
+        {
+            'name': '@',
+            'type': 'MX',
+            'ttl': 3600,
+            'priority': 5,
+            'data': 'alt2.aspmx.l.google.com'
+        },
+        {
+            'name': '@',
+            'type': 'MX',
+            'ttl': 3600,
+            'priority': 10,
+            'data': 'alt3.aspmx.l.google.com'
+        },
+        {
+            'name': '@',
+            'type': 'MX',
+            'ttl': 3600,
+            'priority': 10,
+            'data': 'alt4.aspmx.l.google.com'
+        },
+        {
+            'name': '@',
+            'type': 'TXT',
+            'ttl': 3600,
+            'data': 'v=spf1 include:_spf.google.com ~all'
         }
     ]
     uri = os.getenv('GODADDY_BASE_URL') + '/v1/domains/{}/records'.format(domain) 
