@@ -9,8 +9,12 @@ def list_users(domain):
     users = results.get('users', [])
     return {"data": {"users": users }}
 
-def get_user(domain,email):
-    pass
+def get_user(email):
+    adminService = build('admin','directory_v1',credentials=auth.authenticate())
+
+    result = adminService.users().get(userKey=email).execute()
+    return result
+    
 
 def add_user(request_body):
     adminService = build('admin','directory_v1',credentials=auth.authenticate())
@@ -21,5 +25,9 @@ def add_user(request_body):
 def delete_user(domain,customer_id,email):
     pass
 
-def update_user(domain,customer_id,request_body):
-    pass
+def update_user(email,request_body):
+    adminService = build('admin','directory_v1',credentials=auth.authenticate())
+
+    result = adminService.users().update(userKey=email,body=request_body).execute()
+    return(result)
+    

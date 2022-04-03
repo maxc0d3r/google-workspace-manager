@@ -3,7 +3,9 @@ Usage:
     main.py domains list 
     main.py domains add [--body=<request_body>] [--file=<input_file>]
     main.py users list [--domain=<domain_name>]
+    main.py users get [--email=<email>]
     main.py users add [--body=<request_body>] [--file=<input_file>]
+    main.py users update [--email=<email>] [--body=<request_body>] [--file=<input_file>]
     main.py (-h | --help)
     main.py (-V | --version)
 
@@ -25,7 +27,7 @@ import gwm.directory.domains
 import gwm.directory.users
 import gwm.directory.groups
 from gwm.directory.domains import list_domains, add_domain, delete_domain
-from gwm.directory.users import list_users, add_user, delete_user
+from gwm.directory.users import list_users, add_user, delete_user, get_user, update_user
 
 APP_VERSION='0.0.0'
 
@@ -66,9 +68,17 @@ def main(args):
                 response = add_user(request_body)
             print(json.dumps(response,indent=1))
         elif args['get']:
-            pass
-        elif args['delete']:
-            pass
+            response = get_user(args['--email'])
+            print(json.dumps(response,indent=1))
+        elif args['update']:
+            if args['--file']:
+                with open(args['--file'],'r') as f:
+                    body = json.load(f)
+                    response = update_user(args['--email'],body)
+            else:
+                request_body = json.loads(args['--body'])
+                response = update_user(args['--email'],request_body)
+            print(json.dumps(response,indent=1))
     else:
         pass
 
